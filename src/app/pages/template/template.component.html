@@ -1,0 +1,80 @@
+<h4>Validacion de Formularios <small>Lado del Template</small></h4>
+<hr>
+<form autocomplete="off" (ngSubmit)="enviar(form)" #form="ngForm">
+    <div>
+        <!-- +++++++++++++++++++++++++++++++++++++++++++++++ Primer input +++++++++++++++++++++++++++++++++++++ -->
+        <div class="form-group row">
+            <label for="nombre" class="col-2 col-form-label">Nombre</label>
+            <div class="col-8">
+                <input type="text" class="form-control" required minlength="7" [ngModel]="usuario.nombre" name="nombre" placeholder="Nombre" #nombre="ngModel" [class.is-valid]="nombre.valid" [class.is-invalid]="nombre.invalid && nombre.touched">
+                <div *ngIf="nombre.errors?.required && nombre.touched" class="invalid-feedback">
+                    Campo Obligatorio
+                </div>
+                <div *ngIf="nombre.errors?.minlength && nombre.touched" class="invalid-feedback">
+                    Longitud invalida
+                </div>
+            </div>
+        </div>
+        <!-- +++++++++++++++++++++++++++++++++ Segundo input ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <div class="form-group row">
+            <label for="apellido" class="col-2 col-form-label">Apellido</label>
+            <div class="col-8">
+                <input type="text" class="form-control" required minlength="7" [ngModel]="usuario.apellido" name="apellido" placeholder="Apellido" #apellido="ngModel" [class.is-valid]="apellido.valid" [class.is-invalid]="apellido.invalid && apellido.touched">
+                <div *ngIf="apellido.errors?.required && apellido.touched" class="invalid-feedback">
+                    Campo Obligatorio
+                </div>
+                <div *ngIf="apellido.errors?.minlength && apellido.touched" class="invalid-feedback">
+                    Longitud invalida
+                </div>
+            </div>
+        </div>
+        <!-- +++++++++++++++++++++++++++++++++++ Tercer input +++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <div class="form-group row">
+            <label for="email" class="col-2 col-form-label">Email</label>
+            <div class="col-8">
+                <input type="email" class="form-control" placeholder="Email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [ngModel]="usuario.correo" name="correo" #correo="ngModel" [class.is-valid]="correo.valid" [class.is-invalid]="correo.invalid && correo.touched">
+                <div *ngIf="correo.errors?.required && correo.touched" class="invalid-feedback">
+                    Campo Obligatorio
+                </div>
+                <div *ngIf="correo.errors?.minlength && correo.touched" class="invalid-feedback">
+                    Longitud invalida
+                </div>
+            </div>
+        </div>
+        <!-- +++++++++++++++++++++++++++++++++++ Input Select +++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <div class="form-group row">
+            <label for="pais" class="col-2 col-form-label">Pais</label>
+            <div class="col-8">
+                <select class="form-control" required name="pais" #pais="ngModel" [ngModel]="usuario.pais" [class.is-valid]="pais.valid" [class.is-invalid]="pais.invalid && pais.touched">
+                    <option *ngFor="let pais of contries" [value]="pais.code">{{pais.name}}</option>
+                </select>
+                <!-- agregar mensajes de error -->
+            </div>
+        </div>
+
+        <!-- ++++++++++++++++++++++++++++++++++++ Input type Radio +++++++++++++++++++++++++++++++++++++ -->
+        <div class="form-group row">
+            <div class="col-10">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="genero" [ngModel]="usuario.genero" value="F">
+                    <label class="form-check-label" for="">Femenino</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="genero" [ngModel]="usuario.genero" value="M">
+                    <label class="form-check-label" for="">Masculino</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- ++++++++++++++++++++++++++++++++++++ Boton enviar +++++++++++++++++++++++++++++++++++++ -->
+        <div class="form-group row">
+            <!-- <label for="nombre" class="col-2 col-form-label">Nombre</label> -->
+            <div class="col-10 input-group">
+                <button [disabled]="!form.valid" type="submit" class="btn btn-outline-success btn-block">Enviar</button>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-danger" *ngIf="form.invalid && form.touched && form.submitted">
+        Error de formulario
+    </div>
+</form>

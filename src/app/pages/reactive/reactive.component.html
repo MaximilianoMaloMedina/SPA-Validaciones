@@ -1,0 +1,93 @@
+<h4>Validacion de Formularios <small>Formulario Reactivo</small></h4>
+<hr>
+<form autocomplete="off" [formGroup]="form" (ngSubmit)="enviar()">
+    <div>
+        <!-- +++++++++++++++++++++++++++++++++++++++++++++++ Primer input +++++++++++++++++++++++++++++++++++++ -->
+        <div class="form-group row">
+            <label for="nombre" class="col-2 col-form-label">Nombre</label>
+            <div class="col-8">
+                <input type="text" class="form-control" placeholder="Nombre" formControlName="nombre" [class.is-invalid]="ValidNombre">
+            </div>
+            <div *ngIf="ValidNombre" class="invalid-feedback">Dato Erroneo</div>
+        </div>
+        <!-- +++++++++++++++++++++++++++++++++ Segundo input ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <div class="form-group row">
+            <label for="apellido" class="col-2 col-form-label">Apellido</label>
+            <div class="col-8">
+                <input type="text" class="form-control" placeholder="Apellido" formControlName="apellido" [class.is-invalid]="validApellido">
+            </div>
+            <div *ngIf="validApellido" class="invalid-feedback">Dato Erroneo</div>
+        </div>
+        <!-- +++++++++++++++++++++++++++++++++++ Tercer input +++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <div class="form-group row">
+            <label for="email" class="col-2 col-form-label">Email</label>
+            <div class="col-8">
+                <input type="email" class="form-control" placeholder="Email" formControlName="correo" [class.is-invalid]="ValidCorreo">
+            </div>
+            <div *ngIf="ValidCorreo" class="invalid-feedback">Dato Erroneo</div>
+        </div>
+        <!-- +++++++++++++++++++++++++++++++++ Validacion personalisada password +++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <div class="row form-group">
+            <label for="" class="col-2 col-form-label">Contraseña</label>
+            <div class="col-8">
+                <input type="text" class="form-control" placeholder="Password" formControlName="pass1" [class.is-invalid]="Pass1">
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="" class="col-2 col-form-label">Confirmar Contraseña</label>
+            <div class="col-8">
+                <input type="text" class="form-control" placeholder="Again Password" formControlName="pass2" [class.is-invalid]="Pass2">
+            </div>
+        </div>
+        <!-- +++++++++++++++++++++++++++++++++ Grupo de controles(Form group) +++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <div class="form-group row" formGroupName="direccion">
+            <label for="" class="col-2 col-form-label">Direccion</label>
+            <div class="form-row col-8">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Estado" formControlName="estado" [class.is-invalid]="validEstado">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Municipio" formControlName="municipio" [class.is-invalid]="validMun">
+                </div>
+            </div>
+            <div *ngIf="ValidCorreo" class="invalid-feedback">Dato Erroneo</div>
+        </div>
+        <!-- ++++++++++++++++++++++++++++++++++++ Arreglo de controles(FormArray) +++++++++++++++++++++++++++++++++++++ -->
+        <div class="row">
+            <div class="col-10">
+                <table class="table">
+                    <thead class="table-dark">
+                        <tr>
+                            <td>Id</td>
+                            <td>Pasatiempo</td>
+                            <td>Acciones</td>
+                        </tr>
+                    </thead>
+                    <!-- contenedor de mi form array -->
+                    <tbody formArrayName="pasatiempos">
+                        <!-- reproducir el tr segun la longitud del form array -->
+                        <tr *ngFor="let control of arrayPT.controls; let i = index">
+                            <td>{{i + 1}}</td>
+                            <td>
+                                <input type="text" class="form-control" [formControlName]="i" placeholder="pasatiempo {{i + 1}}">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-block" (click)="removeControl(i)">Borrar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-primary btn-block my-3" (click)="newControl()">Agregar pasatiempo</button>
+            </div>
+        </div>
+
+
+        <!-- ++++++++++++++++++++++++++++++++++++ Boton enviar +++++++++++++++++++++++++++++++++++++ -->
+        <div class="form-group row">
+            <!-- <label for="nombre" class="col-2 col-form-label">Nombre</label> -->
+            <div class="col-10 input-group">
+                <button type="submit" class="btn btn-outline-success btn-block">Enviar</button>
+            </div>
+        </div>
+    </div>
+</form>
